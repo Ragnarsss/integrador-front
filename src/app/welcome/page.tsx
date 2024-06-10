@@ -1,4 +1,8 @@
+"use client";
+import { useState } from "react";
+
 export default function LandingPage() {
+  const [searchValue, setSearchValue] = useState("");
   return (
     <div className="flex flex-row h-screen bg-red-100">
       <div className="w-1/2 h-full bg-orange-300 flex items-center justify-center">

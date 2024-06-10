@@ -3,7 +3,7 @@ import api from "@/lib/api";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function RegisterPage() {
+export default function Page() {
   const [showErrors, setShowErrors] = useState(false);
   const {
     register,
@@ -19,6 +19,7 @@ export default function RegisterPage() {
       console.log(response);
     });
   });
+
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
       <form onSubmit={onSubmit} className="w-1/4">

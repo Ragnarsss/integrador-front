@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export const NavBar = () => {
+export const ServicesNavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -11,6 +11,13 @@ export const NavBar = () => {
           <Link href="/" className="text-white text-lg font-bold">
             Service App
           </Link>
+          <div className="flex justify-center items-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="rounded px-3 py-2"
+            />
+          </div>
           <button
             className="bg-black w-10 h-10"
             onClick={() => setIsOpen(!isOpen)}
