@@ -1,7 +1,17 @@
+"use client";
+import { SearchingFilters } from "../components/SearchingFilters";
+
+const searchProps = {
+  search: {
+    placeholder: "Search",
+    value: "",
+  },
+};
+
 export default function Page() {
   return (
-    <div className="bg-yellow-500 h-full">
-      <h1>Service Service Page</h1>
+    <div>
+      <h1>hola</h1>
     </div>
   );
 }

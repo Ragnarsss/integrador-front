@@ -22,7 +22,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     : { backgroundColor: "gray", height: "200px" };
 
   return (
-    <div className="w-full max-w-sm rounded overflow-hidden shadow-lg m-4">
+    <div className="w-full max-w-sm rounded shadow-lg m-4">
       <div className="w-full bg-gray-300" style={style} />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{title}</div>

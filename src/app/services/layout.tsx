@@ -1,5 +1,6 @@
 import { Metadata } from "next";
-import { ServicesNavBar } from "./components/servicesNavBar";
+import { ServicesNavBar } from "./components/ServicesNavBar";
+import { SearchingFilters } from "./components/SearchingFilters";
 
 export const metadata: Metadata = {
   title: "Busqueda de servicios",
@@ -7,9 +8,12 @@ export const metadata: Metadata = {
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section>
+    <div className="flex flex-col h-screen">
       <ServicesNavBar />
-      {children}
-    </section>
+      <div className="flex flex-grow">
+        <SearchingFilters />
+        <main className="flex-grow">{children}</main>
+      </div>
+    </div>
   );
 }

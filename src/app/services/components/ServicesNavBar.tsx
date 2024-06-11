@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { FaUser } from "react-icons/fa";
 
 export const ServicesNavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <>
+    <div>
       <nav className="bg-blue-500 p-4 overflow-hidden">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-white text-lg font-bold">
+          <Link href="/home" className="text-white text-lg font-bold">
             Service App
           </Link>
           <div className="flex justify-center items-center">
@@ -18,10 +19,9 @@ export const ServicesNavBar = () => {
               className="rounded px-3 py-2"
             />
           </div>
-          <button
-            className="bg-black w-10 h-10"
-            onClick={() => setIsOpen(!isOpen)}
-          ></button>
+          <button onClick={() => setIsOpen(!isOpen)}>
+            <FaUser size={30} title="User account button" color="black" />
+          </button>
         </div>
       </nav>
       {isOpen && (
@@ -34,6 +34,6 @@ export const ServicesNavBar = () => {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };

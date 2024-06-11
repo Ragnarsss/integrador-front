@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { FaUser } from "react-icons/fa";
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +12,9 @@ export const NavBar = () => {
           <Link href="/" className="text-white text-lg font-bold">
             Service App
           </Link>
-          <button
-            className="bg-black w-10 h-10"
-            onClick={() => setIsOpen(!isOpen)}
-          ></button>
+          <button className=" w-10 h-10 " onClick={() => setIsOpen(!isOpen)}>
+            <FaUser size={30} title="User account button" color="black" />
+          </button>
         </div>
       </nav>
       {isOpen && (
