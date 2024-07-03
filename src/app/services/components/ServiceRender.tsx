@@ -1,57 +1,42 @@
 "use client";
 
+import { useQuery } from "@apollo/client";
 import { ServiceCard } from "./ServiceCard";
+import { ALL_SERVICES_QUERY } from "../graphql/queries/queries";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearch } from "@/hooks/useSearch";
 
+interface CardData {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+}
 export const ServiceCardRender = (props: any) => {
-  // Supongamos que tienes una lista de datos para tus tarjetas
-  const serviceCardsData = [
-    {
-      title: "Card 1",
-      price: 100,
-      description: "This is card 1",
-      imageUrl: "url1",
+  const router = useRouter();
+  const { serviceNameFilter } = useSearch();
+  const [serviceCardsData, setServiceCardsData] = useState([]);
+
+  const { error, data } = useQuery(ALL_SERVICES_QUERY, {
+    onError: (error) => {
+      alert("Error al cargar los servicios");
     },
-    {
-      title: "Card 2",
-      price: 200,
-      description: "This is card 2",
-      imageUrl: "url2",
+    onCompleted: (data) => {
+      setServiceCardsData(data.getAllServices);
     },
-    {
-      title: "Card 3",
-      price: 200,
-      description: "This is card 3",
-      imageUrl: "url3",
-    },
-    {
-      title: "Card 4",
-      price: 200,
-      description: "This is card 4",
-      imageUrl: "url4",
-    },
-    {
-      title: "Card 5",
-      price: 200,
-      description: "This is card 5",
-      imageUrl: "url5",
-    },
-    {
-      title: "Card 6",
-      price: 200,
-      description: "This is card 6",
-      imageUrl: "url6",
-    },
-    {
-      title: "Card 7",
-      price: 200,
-      description: "This is card 7",
-      imageUrl: "url7",
-    },
-  ];
+  });
+
+  useEffect(() => {
+    const filteredData = serviceCardsData.filter((cardData: CardData) =>
+      cardData.title.toLowerCase().includes(serviceNameFilter.toLowerCase())
+    );
+    return () => {};
+  }, [serviceNameFilter, serviceCardsData]);
 
   return (
     <div className="flex flex-row flex-wrap place-content-center ">
-      {serviceCardsData.map((cardData, index) => (
+      {serviceCardsData.map((cardData: CardData, index) => (
         <ServiceCard key={index} {...cardData} />
       ))}
     </div>

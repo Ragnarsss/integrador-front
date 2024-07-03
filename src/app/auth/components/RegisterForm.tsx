@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +14,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
+import { ServerError, useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "@/app/services/graphql/mutations/mutations";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const RegisterForm = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [register, { data, error }] = useMutation(REGISTER_MUTATION, {
+    onError: (error) => {
+      setIsLoading(false);
+      if (
+        error.networkError &&
+        (error.networkError as ServerError).statusCode === 400
+      ) {
+        setErrorMessage(
+          "Request invalido. Por favor, verifica tus credenciales."
+        );
+      } else {
+        setErrorMessage(
+          "Ocurrió un error. Por favor, intenta de nuevo más tarde."
+        );
+      }
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      router.push("/auth/login");
+    },
+  });
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -28,23 +57,15 @@ const RegisterForm = () => {
 
   const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
     console.log(data);
-    setLoading(true);
-    setTimeout(() => {
-      // Aquí simulas la respuesta de la API
-      const apiResponse = { success: true }; // Simula una respuesta exitosa
-
-      if (apiResponse.success) {
-        // Si la llamada a la API es exitosa
-        console.log("Registro exitoso");
-        // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
-      } else {
-        // Si la llamada a la API falla
-        console.log("Error en el registro");
-        // Aquí puedes mostrar un mensaje de error
-      }
-
-      setLoading(false); // Indicar que la carga ha terminado
-    }, 5000);
+    setIsLoading(true);
+    register({
+      variables: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+      },
+    });
+    setIsLoading(false);
   };
 
   return (
@@ -125,8 +146,8 @@ const RegisterForm = () => {
             }}
           />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Cargando..." : "Registrarse"}
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Cargando..." : "Registrarse"}
         </Button>
       </form>
     </Form>

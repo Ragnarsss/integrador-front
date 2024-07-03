@@ -1,5 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schema/indext";
 import {
   Form,
   FormControl,
@@ -9,30 +12,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LoginSchema } from "@/schema/indext";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import * as z from "zod";
-import { useState } from "react";
+import { ServerError, useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "@/app/services/graphql/mutations/mutations";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
-import {
-  AUTHENTICATE_MUTATION,
-  GET_USER_BY_ID,
-} from "@/app/services/graphql/mutations/mutations";
-import { ServerError } from "@apollo/client";
-import { useAuth } from "@/hooks/useAuth";
 
-const LoginForm = () => {
-  const { setAuthenticationToken } = useAuth();
+const CreateUserForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  // const { getUserById } = useMutation(GET_USER_BY_ID, {
-  //   onCompleted: (data) => {
-  //     console.log(data);
-  //   },
-  // });
-
-  const [login, { loading, data, error }] = useMutation(AUTHENTICATE_MUTATION, {
+  const [register, { data, error }] = useMutation(REGISTER_MUTATION, {
     onError: (error) => {
       setIsLoading(false);
       if (
@@ -47,35 +36,40 @@ const LoginForm = () => {
           "Ocurrió un error. Por favor, intenta de nuevo más tarde."
         );
       }
-      setErrorMessage(error.message);
     },
     onCompleted: (data) => {
-      router.push("/home");
+      console.log(data);
+      router.push("/auth/login");
     },
   });
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   const form = useForm({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
+      name: "",
       password: "",
+      passwordConfirmation: "",
     },
   });
 
-  const onSubmit = (formData: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
+    console.log(data);
     setIsLoading(true);
-    login({
+    register({
       variables: {
-        email: formData.email,
-        password: formData.password,
+        email: data.email,
+        name: data.name,
+        password: data.password,
       },
     });
+    setIsLoading(false);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-6`}>
         <div className="space-y-4">
           <FormField
             control={form.control}
@@ -83,13 +77,29 @@ const LoginForm = () => {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>Correo electronico: </FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type="email"
                       placeholder="example@email.com"
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Nombre de usuario</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="name" placeholder="Nombre" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,15 +125,32 @@ const LoginForm = () => {
               );
             }}
           />
+          <FormField
+            control={form.control}
+            name="passwordConfirmation"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Confirmar contraseña: </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="Confirma tu contraseña"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
         </div>
-        {errorMessage && <p>{errorMessage}</p>}
-
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Cargando..." : "Iniciar sesión"}
+          {isLoading ? "Cargando..." : "Registrarse"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default CreateUserForm;

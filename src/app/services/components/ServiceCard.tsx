@@ -7,24 +7,38 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ImageCarousel } from "./ImageCarousel";
-import { Button } from "@/components/ui/button";
+import { ServiceBooking } from "./ServiceBooking";
 
-export function ServiceCard() {
+interface ServiceCardProps {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+}
+
+export function ServiceCard({
+  title,
+  professionalId,
+  description,
+  category,
+}: ServiceCardProps) {
   return (
     <Card className="w-[350px] m-4">
       <CardHeader>
-        <CardTitle className="ml-6">Servicio</CardTitle>
+        <CardTitle className="ml-6">{title}</CardTitle>
         <ImageCarousel />
       </CardHeader>
       <CardContent>
-        <CardTitle style={{ paddingBottom: "20px" }}>$ 9.990</CardTitle>
-        <CardDescription>
-          Un servicio que puede ser agendado por usuarios
-        </CardDescription>
+        <CardTitle style={{ paddingBottom: "20px" }}>{category}</CardTitle>
+        <CardDescription>{description} </CardDescription>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button className="bg-blue-400">Detalles</Button>
-        <Button className="bg-green-400">Agendar</Button>
+        <ServiceBooking
+          title={title}
+          email={"email"}
+          professionalId={professionalId}
+          professional={"asdasd"}
+        />
       </CardFooter>
     </Card>
   );
