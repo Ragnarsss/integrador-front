@@ -27,10 +27,3 @@ export const LoginSchema = z.object({
     message: "Ingresa una contraseña mas larga. Mínimo 8 caracteres",
   }),
 });
-
-export const BookingSchema = z.object({
-  email: z.string().email({}),
-  date: z.date({
-    message: "Ingresa una fecha válida",
-  }),
-});

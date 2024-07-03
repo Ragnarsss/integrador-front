@@ -4,6 +4,7 @@ import "../globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import { ApolloWrapper } from "./ApolloWrapper.jsx";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
             <AuthProvider>{children}</AuthProvider>
           </ApolloWrapper>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

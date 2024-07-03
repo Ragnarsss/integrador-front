@@ -10,9 +10,8 @@ export interface AuthContextType {
   userEmail: string;
   setUserId: (id: number) => void;
   setUserEmail: (email: string) => void;
-  setUser: (user: User) => void;
   authenticationToken: string;
-  login: (token: string) => void;
+  login: (userId: number, token: string, email: string) => void;
   logout: () => void;
   setAuthenticationToken: (token: string) => void;
 }

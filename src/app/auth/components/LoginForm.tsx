@@ -1,4 +1,5 @@
 "use client";
+import { AUTHENTICATE_MUTATION } from "@/app/services/graphql/mutations/mutations";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,32 +10,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 import { LoginSchema } from "@/schema/indext";
+import { ServerError, useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
-import {
-  AUTHENTICATE_MUTATION,
-  GET_USER_BY_ID,
-} from "@/app/services/graphql/mutations/mutations";
-import { ServerError } from "@apollo/client";
-import { useAuth } from "@/hooks/useAuth";
 
 const LoginForm = () => {
-  const { setAuthenticationToken } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { login: authLogin } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
-  // const { getUserById } = useMutation(GET_USER_BY_ID, {
-  //   onCompleted: (data) => {
-  //     console.log(data);
-  //   },
-  // });
 
-  const [login, { loading, data, error }] = useMutation(AUTHENTICATE_MUTATION, {
+  const [login, { data, error }] = useMutation(AUTHENTICATE_MUTATION, {
     onError: (error) => {
-      setIsLoading(false);
       if (
         error.networkError &&
         (error.networkError as ServerError).statusCode === 400
@@ -47,13 +38,13 @@ const LoginForm = () => {
           "Ocurrió un error. Por favor, intenta de nuevo más tarde."
         );
       }
-      setErrorMessage(error.message);
+      setIsLoading(false);
     },
     onCompleted: (data) => {
+      authLogin(data.login.user.id, data.login.token, data.login.user.email);
       router.push("/home");
     },
   });
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -63,14 +54,15 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = (formData: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     setIsLoading(true);
-    login({
+    await login({
       variables: {
-        email: formData.email,
-        password: formData.password,
+        email: data.email,
+        password: data.password,
       },
     });
+    setIsLoading(false);
   };
 
   return (

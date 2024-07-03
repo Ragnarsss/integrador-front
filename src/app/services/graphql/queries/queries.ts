@@ -1,7 +1,17 @@
 import { gql } from "@apollo/client";
 
+export const ALL_USERS_QUERY = gql`
+  query getAllUsersMutation {
+    getAllUsers {
+      id
+      name
+      email
+    }
+  }
+`;
+
 export const ALL_SERVICES_QUERY = gql`
-  query getAllServices {
+  query getAllServicesMutation {
     getAllServices {
       id
       title
@@ -12,8 +22,40 @@ export const ALL_SERVICES_QUERY = gql`
   }
 `;
 
+export const ALL_PROFESSIONALS_QUERY = gql`
+  query getAllProfessionalsMutation {
+    getAllProfessionals {
+      id
+      name
+      email
+    }
+  }
+`;
+
+export const ALL_BOOKINGS_QUERY = gql`
+  query getAllBookingsMutation {
+    getAllBookings {
+      id
+      userId
+      IsActive
+      serviceId
+      professionalId
+    }
+  }
+`;
+
+export const GET_USER_BY_EMAIL = gql`
+  query getUserByEmailMutation($email: String!) {
+    getUserByEmail(email: $email) {
+      id
+      name
+      email
+    }
+  }
+`;
+
 export const GET_SERVICE_BY_ID = gql`
-  query getServiceById($id: ID!) {
+  query getServiceByIdMutation($id: ID!) {
     getServiceById(id: $id) {
       id
       title
@@ -24,7 +66,7 @@ export const GET_SERVICE_BY_ID = gql`
 `;
 
 export const GET_PROFESSIONAL_BY_ID = gql`
-  query getProfessionalById($id: ID!) {
+  query getProfessionalByIdMutation($id: ID!) {
     getProfessionalById(id: $id) {
       id
       name

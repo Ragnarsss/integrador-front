@@ -1,8 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema } from "@/schema/indext";
+import { REGISTER_MUTATION } from "@/app/services/graphql/mutations/mutations";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,12 +10,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import * as z from "zod";
+import { RegisterSchema } from "@/schema/indext";
 import { ServerError, useMutation } from "@apollo/client";
-import { REGISTER_MUTATION } from "@/app/services/graphql/mutations/mutations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import { useSearch } from "@/hooks/useSearch";
 
 interface CardData {
-  id: string;
+  id: number;
   title: string;
   description: string;
   category: string;
+  serviceId: number;
+  professionalId: number;
 }
 export const ServiceCardRender = (props: any) => {
   const router = useRouter();
@@ -23,6 +25,7 @@ export const ServiceCardRender = (props: any) => {
       alert("Error al cargar los servicios");
     },
     onCompleted: (data) => {
+      console.log("data", data.getAllServices);
       setServiceCardsData(data.getAllServices);
     },
   });
@@ -36,9 +39,12 @@ export const ServiceCardRender = (props: any) => {
 
   return (
     <div className="flex flex-row flex-wrap place-content-center ">
-      {serviceCardsData.map((cardData: CardData, index) => (
-        <ServiceCard key={index} {...cardData} />
-      ))}
+      {serviceCardsData.map((cardData: CardData, index) => {
+        console.log(cardData);
+        return (
+          <ServiceCard key={index} {...cardData} serviceId={cardData.id} />
+        );
+      })}
     </div>
   );
 };

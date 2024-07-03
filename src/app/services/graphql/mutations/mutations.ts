@@ -17,15 +17,19 @@ export const REGISTER_MUTATION = gql`
 `;
 
 export const AUTHENTICATE_MUTATION = gql`
-  mutation Authenticate($email: String!, $password: String!) {
+  mutation AuthenticateMutation($email: String!, $password: String!) {
     login(loginInput: { email: $email, password: $password }) {
       token
+      user {
+        id
+        email
+      }
     }
   }
 `;
 
 export const GET_USER_BY_ID = gql`
-  mutation GetUserById($id: Int!) {
+  mutation GetUserByIdMutation($id: Int!) {
     getUserById(id: $id) {
       id
       name
@@ -35,11 +39,11 @@ export const GET_USER_BY_ID = gql`
 `;
 
 export const BOOKING_MUTATION = gql`
-  mutation Booking(
-    $userId: Number!
+  mutation BookingMutation(
+    $userId: Int!
     $IsActive: Boolean!
-    $serviceId: Number!
-    $professionalId: Number!
+    $serviceId: Int!
+    $professionalId: Int!
   ) {
     createBooking(
       createBookingInput: {

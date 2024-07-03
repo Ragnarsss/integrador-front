@@ -14,7 +14,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const login = (email: string, userId: number, token: string) => {
+  const login = (userId: number, token: string, email: string) => {
     localStorage.setItem("authenticationToken", token);
     localStorage.setItem("userId", String(userId));
     localStorage.setItem("userEmail", email);
@@ -25,22 +25,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => {
-    localStorage.setItem("authenticationToken", "");
+    localStorage.clear();
     setAuthenticationToken("");
-    localStorage.setItem("userId", "");
     setUserId(0);
-    localStorage.setItem("userEmail", "");
     setUserEmail("");
   };
 
   const checkIfUserIsLoggedIn = async () => {
-    try {
-      const token = localStorage.getItem("authenticationToken");
-      if (token) {
-        setAuthenticationToken(token);
-      }
-    } catch (error) {
-      console.log(error);
+    const token = localStorage.getItem("authenticationToken");
+    const storedUserId = localStorage.getItem("userId");
+    const email = localStorage.getItem("userEmail");
+
+    if (token) {
+      setAuthenticationToken(token);
+    }
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+    }
+    if (email) {
+      console.log("email", email);
+      setUserEmail(email);
     }
   };
 
