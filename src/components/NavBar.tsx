@@ -2,19 +2,21 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { ThemeToggler } from "./ThemeToggler";
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <nav className="bg-blue-500 p-4 overflow-hidden">
+      <nav className="bg-primary p-4 overflow-hidden">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-white text-lg font-bold">
+          <Link href="/" className="text-muted text-lg font-bold">
             Service App
           </Link>
           <button className=" w-10 h-10 " onClick={() => setIsOpen(!isOpen)}>
             <FaUser size={30} title="User account button" color="black" />
           </button>
+          <ThemeToggler />
         </div>
       </nav>
       {isOpen && (

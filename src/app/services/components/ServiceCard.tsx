@@ -1,38 +1,31 @@
-import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ImageCarousel } from "./ImageCarousel";
+import { Button } from "@/components/ui/button";
 
-interface ServiceCardProps {
-  title?: string;
-  price?: number;
-  description?: string;
-  imageUrl?: string;
-}
-
-export const ServiceCard: React.FC<ServiceCardProps> = ({
-  title = "Title",
-  price = 0,
-  description = "Description",
-  imageUrl,
-}) => {
-  const style = imageUrl
-    ? {
-        backgroundImage: `url(${imageUrl})`,
-        backgroundSize: "cover",
-        height: "200px",
-      }
-    : { backgroundColor: "gray", height: "200px" };
-
+export function ServiceCard() {
   return (
-    <div className="w-full max-w-sm rounded shadow-lg m-4">
-      <div className="w-full bg-gray-300" style={style} />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{title}</div>
-        <p className="text-gray-700 text-base">{description}</p>
-      </div>
-      <div className="px-6 pt-4 pb-2">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-          ${price}
-        </span>
-      </div>
-    </div>
+    <Card className="w-[350px] m-4">
+      <CardHeader>
+        <CardTitle className="ml-6">Servicio</CardTitle>
+        <ImageCarousel />
+      </CardHeader>
+      <CardContent>
+        <CardTitle style={{ paddingBottom: "20px" }}>$ 9.990</CardTitle>
+        <CardDescription>
+          Un servicio que puede ser agendado por usuarios
+        </CardDescription>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button className="bg-blue-400">Detalles</Button>
+        <Button className="bg-green-400">Agendar</Button>
+      </CardFooter>
+    </Card>
   );
-};
+}

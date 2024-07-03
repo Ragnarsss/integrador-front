@@ -1,23 +1,31 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import RegisterForm from "../auth/components/RegisterForm";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
 
   return (
-    <div className="flex flex-row h-screen bg-red-100">
-      <div className="w-1/2 h-full bg-orange-300 flex items-center justify-center">
+    <section className="flex flex-row h-screen">
+      <div className="w-1/2 h-full flex items-center  flex-col justify-center">
+        <h1>Busca algo </h1>
         <div className="relative">
-          <input
+          <Input
             type="text"
             className="h-10 pl-8 pr-20 rounded-full text-sm focus:outline-none"
             placeholder="Search..."
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setSearchValue(e.target.value);
+            }}
           />
           <Link
-            href={`/services/searching?search=${searchValue}`}
+            href={`/services/searching/${searchValue}`}
             className="absolute right-0 top-0 mt-2 mr-2"
           >
             <button>
@@ -32,31 +40,12 @@ export default function LandingPage() {
           </Link>
         </div>
       </div>
-      <div className="w-1/2 h-full bg-blue-300 flex items-center justify-center">
-        <form className="w-1/2">
-          <input
-            type="text"
-            placeholder="Name"
-            className="mb-2 p-2 w-full rounded-md"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="mb-2 p-2 w-full rounded-md"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="mb-2 p-2 w-full rounded-md"
-          />
-          <button
-            type="submit"
-            className="w-full p-2 rounded-md bg-green-500 text-white"
-          >
-            Register
-          </button>
-        </form>
+      <div className="mx-auto m-0 p-0">
+        <div className="w-full items-center flex flex-col mt-32 ">
+          <h1 className="mb-10 top-0 text-2xl ">Registrate</h1>
+          <RegisterForm />
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

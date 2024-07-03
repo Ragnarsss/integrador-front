@@ -1,9 +1,12 @@
 "use client";
+import { DatePickerWithRange } from "@/components/ui/DatePicker";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const SearchingFilters = () => {
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
   const [showErrors, setShowErrors] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -89,18 +92,7 @@ export const SearchingFilters = () => {
           </div>
         </div>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="date"
-          >
-            Fecha
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="date"
-            type="date"
-            {...register("filterDate")}
-          />
+          <DatePickerWithRange />
         </div>
         <div className="mb-4">
           <label
@@ -109,27 +101,18 @@ export const SearchingFilters = () => {
           >
             Calificación: {rating}
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="rating"
-            type="range"
-            min="1"
-            max="5"
-            value={rating}
-            {...register("filterRating", {
-              required: {
-                value: false,
-                message: "La calificación es requerida",
-              },
-            })}
+          <Slider
+            defaultValue={[rating]}
+            max={5}
+            min={0}
+            step={1}
+            value={[rating]}
+            onValueChange={(value) => setRating(value[0])}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <Button variant={"default"} type="submit">
           Enviar
-        </button>
+        </Button>
       </form>
     </aside>
   );
