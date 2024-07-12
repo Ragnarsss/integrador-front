@@ -1,9 +1,9 @@
-import { ThemeToggler } from "@/components/ThemeToggler";
+import AuthNavBar from "./components/AuthNavBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section className="w-full">
-      <ThemeToggler />
+      <AuthNavBar />
       <div className="h-screen flex items-center justify-center">
         {children}
       </div>

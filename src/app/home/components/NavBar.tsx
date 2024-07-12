@@ -1,15 +1,14 @@
-import Link from "next/link";
+import { AppNavigationMenu } from "./AppNavigationMenu";
 
-export default function NavBar() {
+type NavBarProps = {
+  children?: React.ReactNode;
+};
+
+export default function NavBar({ children }: NavBarProps) {
   return (
-    <div className="bg-purple-400 h-16 flex items-center justify-between px-4">
-      <h1 className="text-white font-bold text-xl">Servicios</h1>
-      <div className="flex items-center space-x-4">
-        <Link href="/account/profile" className="text-white">
-          Perfil
-        </Link>
-        <button className="text-white">Cerrar sesión</button>
-      </div>
-    </div>
+    <nav className="flex-row flex justify-center items-center h-20 bg-primary">
+      <h1 className="font-bold text-3xl">Servicios</h1>
+      <AppNavigationMenu />
+    </nav>
   );
 }

@@ -41,7 +41,8 @@ export const exampleUsers = [
 export const exampleServices = [
   {
     id: 1,
-    name: "Service 1",
+    title: "Service 1",
+    professionalId: exampleUsers[0].id,
     description: "Description of service 1",
     price: 100,
     averageRating: 4.5,
@@ -52,7 +53,8 @@ export const exampleServices = [
   },
   {
     id: 2,
-    name: "Service 2",
+    title: "Service 2",
+    professionalId: exampleUsers[0].id,
     description: "Description of service 2",
     price: 200,
     averageRating: 4.5,
@@ -63,7 +65,8 @@ export const exampleServices = [
   },
   {
     id: 3,
-    name: "Service 3",
+    title: "Service 3",
+    professionalId: exampleUsers[0].id,
     description: "Description of service 3",
     price: 300,
     averageRating: 4.5,
@@ -74,7 +77,8 @@ export const exampleServices = [
   },
   {
     id: 4,
-    name: "Service 4",
+    title: "Service 4",
+    professionalId: exampleUsers[0].id,
     description: "Description of service 4",
     price: 400,
     averageRating: 4.5,
@@ -85,7 +89,8 @@ export const exampleServices = [
   },
   {
     id: 5,
-    name: "Service 5",
+    title: "Service 5",
+    professionalId: exampleUsers[0].id,
     description: "Description of service 5",
     price: 500,
     averageRating: 4.5,

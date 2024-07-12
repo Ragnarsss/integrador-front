@@ -1,16 +1,19 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import { AuthProvider } from "@/context/AuthContext";
-import { ApolloWrapper } from "./ApolloWrapper.jsx";
-import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from "next";
+import { Inter as FontSans } from "next/font/google";
+import "../globals.css";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Service App",
   description: "El servicio que necesitas, siempre a la mano",
+  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
@@ -20,18 +23,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`h-screen overflow-hidden ${inter.className}`}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased dark:bg-black dark:text-white transition-colors duration-300 ease-in-out",
+          fontSans.className
+        )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <ApolloWrapper>
-            <AuthProvider>{children}</AuthProvider>
-          </ApolloWrapper>
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   );

@@ -1,16 +1,10 @@
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
-
 export interface AuthContextType {
   userId: number;
   userEmail: string;
   setUserId: (id: number) => void;
   setUserEmail: (email: string) => void;
   authenticationToken: string;
+  isLoggedIn: boolean;
   login: (userId: number, token: string, email: string) => void;
   logout: () => void;
   setAuthenticationToken: (token: string) => void;

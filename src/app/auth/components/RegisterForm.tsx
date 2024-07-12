@@ -1,5 +1,4 @@
 "use client";
-import { REGISTER_MUTATION } from "@/app/services/graphql/mutations/mutations";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,7 +10,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RegisterSchema } from "@/schema/indext";
-import { ServerError, useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,27 +19,6 @@ import * as z from "zod";
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [register, { data, error }] = useMutation(REGISTER_MUTATION, {
-    onError: (error) => {
-      setIsLoading(false);
-      if (
-        error.networkError &&
-        (error.networkError as ServerError).statusCode === 400
-      ) {
-        setErrorMessage(
-          "Request invalido. Por favor, verifica tus credenciales."
-        );
-      } else {
-        setErrorMessage(
-          "Ocurrió un error. Por favor, intenta de nuevo más tarde."
-        );
-      }
-    },
-    onCompleted: (data) => {
-      console.log(data);
-      router.push("/auth/login");
-    },
-  });
   const router = useRouter();
 
   const form = useForm({
@@ -57,13 +34,6 @@ const RegisterForm = () => {
   const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
     console.log(data);
     setIsLoading(true);
-    register({
-      variables: {
-        email: data.email,
-        name: data.name,
-        password: data.password,
-      },
-    });
     setIsLoading(false);
   };
 

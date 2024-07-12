@@ -1,8 +1,6 @@
 "use client";
 import { Slider } from "@/components/ui/slider";
 import { useSearch } from "@/hooks/useSearch";
-import React from "react";
-import { useForm } from "react-hook-form";
 
 export const SearchingFilters = () => {
   const {
@@ -15,7 +13,7 @@ export const SearchingFilters = () => {
   } = useSearch();
 
   return (
-    <aside className=" bg-slate-800 px-8 pt-4 w-96">
+    <aside className=" bg-slate-800 px-8 pt-4 w-96 md:">
       <h2 className=" bg-primary-foreground font-bold text-4xl mb-8 ">
         Filtros
       </h2>

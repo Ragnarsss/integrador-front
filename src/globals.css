@@ -23,7 +23,7 @@
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 20 14.3% 4.1%;
-    --radius: 0rem;
+    --radius: 1rem;
   }
 
   .dark {
@@ -48,6 +48,7 @@
     --ring: 35.5 91.7% 32.9%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;

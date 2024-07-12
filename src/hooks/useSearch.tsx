@@ -1,5 +1,5 @@
 import { SearchingContext } from "@/context/SearchingContext";
-import { SearchingContextType } from "@/types/types";
+import { SearchingContextType } from "@/types/context.types";
 import { useContext } from "react";
 
 export const useSearch = (): SearchingContextType => {
