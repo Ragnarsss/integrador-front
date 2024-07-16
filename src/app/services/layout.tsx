@@ -11,14 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SearchingProvider>
       <ServicesNavBar />
-      <div className="flex flex-col">
-        <div className="flex flex-grow">
-          <SearchingFilters />
-          <main className="flex-grow overflow-auto h-screen z-0">
-            {children}
-          </main>
-        </div>
-      </div>
+      <main className="flex-grow overflow-auto h-screen z-0">{children}</main>
     </SearchingProvider>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { SearchingContextType } from "@/types/context.types";
+import { SearchingContextType } from "@/lib/types/context.types";
 import { ReactNode, createContext, useState } from "react";
 
 export const SearchingContext = createContext<SearchingContextType | undefined>(

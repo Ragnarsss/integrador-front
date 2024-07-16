@@ -4,16 +4,8 @@ import { useSearch } from "@/hooks/useSearch";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ServiceCard } from "./ServiceCard";
-import { exampleServices } from "@/common/staticdata";
+import { exampleServices } from "@/lib/staticdata";
 
-interface CardData {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  serviceId: number;
-  professionalId: number;
-}
 export const ServicesRender = (props: any) => {
   const router = useRouter();
   const { serviceNameFilter } = useSearch();
@@ -22,10 +14,7 @@ export const ServicesRender = (props: any) => {
   return (
     <div className="flex flex-row flex-wrap place-content-center ">
       {serviceCardsData.map((cardData, index) => {
-        console.log(cardData);
-        return (
-          <ServiceCard key={index} {...cardData} serviceId={cardData.id} />
-        );
+        return <ServiceCard key={index} {...cardData} />;
       })}
     </div>
   );

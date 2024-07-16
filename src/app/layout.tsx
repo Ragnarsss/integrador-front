@@ -13,7 +13,6 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "Service App",
   description: "El servicio que necesitas, siempre a la mano",
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
