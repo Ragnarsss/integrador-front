@@ -11,7 +11,7 @@ import {
 
 export function ImageCarousel() {
   return (
-    <Carousel className="w-full max-w-xs mx-auto px-4 pt-4">
+    <Carousel className="size-auto max-w-xs px-4 pt-4">
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>

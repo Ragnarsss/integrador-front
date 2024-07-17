@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="es">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased dark:bg-black dark:text-white transition-colors duration-300 ease-in-out",
+          "overflow-hidden bg-background font-sans antialiased dark:bg-black dark:text-white transition-colors duration-300 ease-in-out",
           fontSans.className
         )}
       >

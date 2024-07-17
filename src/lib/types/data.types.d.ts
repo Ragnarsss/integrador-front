@@ -8,7 +8,8 @@ export interface User {
 export interface Service {
   id: string;
   title: string;
-  description: string;
+  brief_details: string;
+  long_details: string;
   price: number;
   averageRating: number;
   totalSolicitations: number;

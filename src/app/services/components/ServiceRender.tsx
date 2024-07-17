@@ -12,10 +12,12 @@ export const ServicesRender = (props: any) => {
   const [serviceCardsData, setServiceCardsData] = useState(exampleServices);
 
   return (
-    <div className="flex flex-row flex-wrap place-content-center ">
-      {serviceCardsData.map((cardData, index) => {
-        return <ServiceCard key={index} {...cardData} />;
-      })}
-    </div>
+    <section>
+      <div className="flex flex-row flex-wrap overflow-scroll pt-5 ml-5 gap-6 pb-24">
+        {serviceCardsData.map((cardData, index) => {
+          return <ServiceCard key={index} {...cardData} />;
+        })}
+      </div>
+    </section>
   );
 };

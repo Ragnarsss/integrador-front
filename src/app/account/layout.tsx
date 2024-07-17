@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex">
-      <aside className="bg-slate-400 w-64 h-full fixed left-0 top-0 overflow-auto p-4 flex flex-col justify-between">
+      <aside className="bg-slate-400 w-64 h-full fixed left-0 top-0 p-4 flex flex-col justify-between">
         <div>
           <div className="flex items-center mb-4">
             <Link href="/home" className="block text-white text-4xl">

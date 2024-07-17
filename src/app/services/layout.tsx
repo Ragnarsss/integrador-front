@@ -1,7 +1,7 @@
 import { SearchingProvider } from "@/context/SearchingContext";
 import { Metadata } from "next";
-import { SearchingFilters } from "./components/SearchingFilters";
 import { ServicesNavBar } from "./components/ServicesNavBar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Busqueda de servicios",
@@ -9,9 +9,13 @@ export const metadata: Metadata = {
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <SearchingProvider>
-      <ServicesNavBar />
-      <main className="flex-grow overflow-auto h-screen z-0">{children}</main>
-    </SearchingProvider>
+    <section>
+      <TooltipProvider>
+        <SearchingProvider>
+          <ServicesNavBar />
+          {children}
+        </SearchingProvider>
+      </TooltipProvider>
+    </section>
   );
 }

@@ -1,9 +1,7 @@
-import { SearchingFilters } from "../components/SearchingFilters";
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section>
-      <SearchingFilters />
+      <div>asdasdas</div>
       {children}
     </section>
   );

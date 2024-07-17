@@ -11,7 +11,7 @@ interface AppNavBarProps {
 
 export const AppNavBar: FC<AppNavBarProps> = ({ children }) => {
   return (
-    <nav className="container mx-auto p-0 flex items-center justify-between h-20 color">
+    <nav className="container mx-auto p-0 flex items-center justify-between h-20 shadow-md z-50">
       <Link href="/" className="text-lg font-bold">
         <FaParachuteBox
           size={30}

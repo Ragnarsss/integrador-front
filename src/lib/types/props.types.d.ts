@@ -1,8 +1,8 @@
 export interface ServiceCardProps {
-  serviceId: number;
   title: string;
   professionalId: number;
-  description: string;
+  brief_details: string;
+  long_details: string;
   category: string;
   price: number;
   averageRating: number;
