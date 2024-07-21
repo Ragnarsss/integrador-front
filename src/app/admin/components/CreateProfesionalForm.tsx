@@ -38,7 +38,6 @@ const CreateUserForm = () => {
       }
     },
     onCompleted: (data) => {
-      console.log(data);
       router.push("/auth/login");
     },
   });
@@ -55,7 +54,6 @@ const CreateUserForm = () => {
   });
 
   const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
-    console.log(data);
     setIsLoading(true);
     register({
       variables: {

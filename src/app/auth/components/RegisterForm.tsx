@@ -32,7 +32,6 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
-    console.log(data);
     setIsLoading(true);
     setIsLoading(false);
   };

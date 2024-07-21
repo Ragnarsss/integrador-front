@@ -3,7 +3,8 @@ import { Categories, Roles } from "./constants";
 export const exampleAdmin = {
   id: 1,
   name: "Admin",
-  email: "admin@gmail",
+  email: "admin@gmail.com",
+  password: "supersecretpassword",
   roles: [Roles.ADMIN],
 };
 
@@ -11,31 +12,31 @@ export const exampleUsers = [
   {
     id: 1,
     name: "User 1",
-    email: "example@gmail",
+    email: "example@gmail.com",
     roles: [Roles.USER, Roles.VENDOR],
   },
   {
     id: 2,
     name: "User 2",
-    email: "example2@gmail",
+    email: "example2@gmail.com",
     roles: [Roles.USER, Roles.VENDOR],
   },
   {
     id: 3,
     name: "User 3",
-    email: "example3@gmail",
+    email: "example3@gmail.com",
     roles: [Roles.USER, Roles.VENDOR],
   },
   {
     id: 4,
     name: "User 4",
-    email: "example4@gmail",
+    email: "example4@gmail.com",
     roles: [Roles.USER],
   },
   {
     id: 5,
     name: "User 5",
-    email: "example5@gmail",
+    email: "example5@gmail.com",
     roles: [Roles.USER],
   },
 ];

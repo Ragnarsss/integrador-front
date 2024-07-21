@@ -2,7 +2,7 @@
 
 import { ServicesRender } from "./components/ServiceRender";
 
-export default function Page(props: any) {
+export default function Page() {
   return (
     <section>
       <ServicesRender />

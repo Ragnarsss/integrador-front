@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,14 +29,16 @@ export default function RootLayout({
           fontSans.className
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>{children}</AuthProvider>
-        </ThemeProvider>
+        <TooltipProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>{children}</AuthProvider>
+          </ThemeProvider>
+        </TooltipProvider>
       </body>
     </html>
   );

@@ -1,13 +1,10 @@
 export interface AuthContextType {
+  isLoggedIn: boolean;
+  isLoading: boolean;
   userId: number;
   userEmail: string;
-  setUserId: (id: number) => void;
-  setUserEmail: (email: string) => void;
-  authenticationToken: string;
-  isLoggedIn: boolean;
-  login: (userId: number, token: string, email: string) => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
-  setAuthenticationToken: (token: string) => void;
 }
 
 export interface SearchingContextType {

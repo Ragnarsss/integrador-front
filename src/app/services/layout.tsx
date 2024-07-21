@@ -1,7 +1,6 @@
 import { SearchingProvider } from "@/context/SearchingContext";
 import { Metadata } from "next";
 import { ServicesNavBar } from "./components/ServicesNavBar";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Busqueda de servicios",
@@ -10,12 +9,10 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section>
-      <TooltipProvider>
-        <SearchingProvider>
-          <ServicesNavBar />
-          {children}
-        </SearchingProvider>
-      </TooltipProvider>
+      <SearchingProvider>
+        <ServicesNavBar />
+        {children}
+      </SearchingProvider>
     </section>
   );
 }

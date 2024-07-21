@@ -19,7 +19,7 @@ import * as z from "zod";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { login: authLogin } = useAuth();
+  const { login } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
@@ -33,6 +33,9 @@ const LoginForm = () => {
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     setIsLoading(true);
+    setTimeout(() => {
+      login(data.email, data.password);
+    }, 5000);
     setIsLoading(false);
   };
 

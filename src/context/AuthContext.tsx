@@ -1,4 +1,5 @@
 "use client";
+import { exampleAdmin } from "@/lib/staticdata";
 import { AuthContextType } from "@/lib/types/context.types";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
@@ -8,60 +9,65 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [authenticationToken, setAuthenticationToken] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const [userId, setUserId] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [sampleGod, setSampleGod] = useState(exampleAdmin);
+
   const [userEmail, setUserEmail] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const login = (userId: number, token: string, email: string) => {
+  const login = (email: string, password: string) => {
+    if (email === sampleGod.email && password === sampleGod.password) {
+      setUserEmail(email);
+      setUserId(sampleGod.id);
+      setIsLoggedIn(!isLoggedIn);
+      localStorage.setItem("userId", String(userId));
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("loginStatus", isLoggedIn.toString());
+    }
     // localStorage.setItem("authenticationToken", token);
-    // localStorage.setItem("userId", String(userId));
-    // localStorage.setItem("userEmail", email);
     // setAuthenticationToken(token);
-    // setUserId(userId);
-    // setUserEmail(email);
-    setIsLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.clear();
     setAuthenticationToken("");
-    setUserId(0);
     setUserEmail("");
+    setIsLoggedIn(!isLoggedIn);
   };
 
   const checkIfUserIsLoggedIn = async () => {
     // const token = localStorage.getItem("authenticationToken");
-    // const storedUserId = localStorage.getItem("userId");
-    // const email = localStorage.getItem("userEmail");
+    const storedUserId = localStorage.getItem("userId");
+    const email = localStorage.getItem("userEmail");
+    const loginStatus = localStorage.getItem("loginStatus");
     // if (token) {
     //   setAuthenticationToken(token);
-    //   console.log("token", token);
     // }
-    // if (storedUserId) {
-    //   setUserId(parseInt(storedUserId, 10));
-    // }
-    // if (email) {
-    //   console.log("email", email);
-    //   setUserEmail(email);
-    // }
+    if (loginStatus) {
+      setIsLoggedIn(loginStatus === "true");
+
+      if (storedUserId) {
+        setUserId(parseInt(storedUserId, 10));
+      }
+      if (email) {
+        setUserEmail(email);
+      }
+    }
+    setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   checkIfUserIsLoggedIn();
-  // }, []);
+  useEffect(() => {
+    checkIfUserIsLoggedIn();
+  }, []);
 
   const contextValue = {
+    isLoggedIn,
+    isLoading,
     userId,
     userEmail,
-    isLoggedIn,
-    authenticationToken,
-    setAuthenticationToken,
     login,
-    setUserId,
-    setUserEmail,
     logout,
   };
 
