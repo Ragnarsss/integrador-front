@@ -1,20 +1,34 @@
+"use client";
 import ThemeProvider from "@/components/ThemeProvider";
-import { AuthProvider } from "@/context/AuthContext";
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-import "../globals.css";
-import { cn } from "@/lib/utils";
+import { Progress } from "@/components/ui/progress";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
+import { cn } from "@/lib/utils";
+import { Inter as FontSans } from "next/font/google";
+import { useEffect, useState } from "react";
+import "../globals.css";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export const metadata: Metadata = {
-  title: "Service App",
-  description: "El servicio que necesitas, siempre a la mano",
-};
+function LoadingProgress() {
+  const [progress, setProgress] = useState(33);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setProgress(100), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <Progress value={progress} className="w-[60%]" />;
+}
+
+function RootLayoutContent({ children }: { children: React.ReactNode }) {
+  const { isLoading } = useAuth();
+  return isLoading ? <LoadingProgress /> : children;
+}
 
 export default function RootLayout({
   children,
@@ -36,7 +50,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <RootLayoutContent>{children}</RootLayoutContent>
+            </AuthProvider>
           </ThemeProvider>
         </TooltipProvider>
       </body>

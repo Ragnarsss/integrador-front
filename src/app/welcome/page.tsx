@@ -2,25 +2,17 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import VerticalSwipeToSlide from "./Carousel";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
 
   const handleClick = () => {
     router.push(`/services/${searchValue}`);
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/home");
-    }
-  }, [isLoggedIn, router]);
 
   return (
     <section className="flex flex-row h-screen">

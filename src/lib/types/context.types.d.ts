@@ -3,8 +3,8 @@ export interface AuthContextType {
   isLoading: boolean;
   userId: number;
   userEmail: string;
-  login: (email: string, password: string) => void;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export interface SearchingContextType {

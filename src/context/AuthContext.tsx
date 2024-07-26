@@ -1,7 +1,14 @@
 "use client";
 import { exampleAdmin } from "@/lib/staticdata";
 import { AuthContextType } from "@/lib/types/context.types";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -9,6 +16,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [authenticationToken, setAuthenticationToken] = useState("");
+  const router = useRouter();
   const [userId, setUserId] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [userEmail, setUserEmail] = useState("");
 
-  const login = (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
+    setIsLoading(true);
     if (email === sampleGod.email && password === sampleGod.password) {
       setUserEmail(email);
       setUserId(sampleGod.id);
@@ -28,16 +37,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     // localStorage.setItem("authenticationToken", token);
     // setAuthenticationToken(token);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    setIsLoading(true);
     localStorage.clear();
     setAuthenticationToken("");
     setUserEmail("");
     setIsLoggedIn(!isLoggedIn);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
-  const checkIfUserIsLoggedIn = async () => {
+  const checkIfUserIsLoggedIn = useCallback(() => {
+    setIsLoading(true);
     // const token = localStorage.getItem("authenticationToken");
     const storedUserId = localStorage.getItem("userId");
     const email = localStorage.getItem("userEmail");
@@ -54,13 +71,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (email) {
         setUserEmail(email);
       }
+    } else {
+      router.push("/welcome");
     }
-    setIsLoading(false);
-  };
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, [router]);
 
   useEffect(() => {
     checkIfUserIsLoggedIn();
-  }, []);
+  }, [checkIfUserIsLoggedIn]);
 
   const contextValue = {
     isLoggedIn,
