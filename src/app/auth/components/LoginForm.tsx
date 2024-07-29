@@ -12,17 +12,14 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginSchema } from "@/schema/indext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 const LoginForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -32,11 +29,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      login(data.email, data.password);
-    }, 5000);
-    setIsLoading(false);
+    login(data.email, data.password);
   };
 
   return (

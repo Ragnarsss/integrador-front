@@ -12,19 +12,25 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { PiUserCircleMinusThin, PiUserCirclePlusThin } from "react-icons/pi";
 
 export function AppSheet() {
-  const { userEmail, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
+  const router = useRouter();
 
-  const handleClick = async () => {
+  const handleLogout = async () => {
     await logout();
+  };
+
+  const handleAdmin = () => {
+    router.push("/admin");
   };
   return (
     <>
       <Sheet>
         <SheetTrigger asChild>
-          {userEmail !== "" ? (
+          {isLoggedIn ? (
             <PiUserCircleMinusThin
               size={30}
               title="Manage your account"
@@ -39,7 +45,7 @@ export function AppSheet() {
           )}
         </SheetTrigger>
         <SheetContent className="gap-y-4">
-          {userEmail !== "" ? (
+          {isLoggedIn ? (
             <>
               <SheetHeader>
                 <SheetTitle className="">Cerrar sesión</SheetTitle>
@@ -48,8 +54,13 @@ export function AppSheet() {
                 </SheetDescription>
               </SheetHeader>
               <SheetFooter className="mt-12">
+                {isLoggedIn ? (
+                  <Button onClick={handleAdmin}> Admin</Button>
+                ) : (
+                  <></>
+                )}
                 <SheetClose asChild>
-                  <Button onClick={handleClick}>Cerrar sesión</Button>
+                  <Button onClick={handleLogout}>Cerrar sesión</Button>
                 </SheetClose>
               </SheetFooter>
             </>

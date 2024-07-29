@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [userId, setUserId] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [sampleGod, setSampleGod] = useState(exampleAdmin);
 
@@ -33,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoggedIn(!isLoggedIn);
       localStorage.setItem("userId", String(userId));
       localStorage.setItem("userEmail", email);
-      localStorage.setItem("loginStatus", isLoggedIn.toString());
+      localStorage.setItem("loginStatus", "true");
     }
     // localStorage.setItem("authenticationToken", token);
     // setAuthenticationToken(token);
@@ -59,6 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const storedUserId = localStorage.getItem("userId");
     const email = localStorage.getItem("userEmail");
     const loginStatus = localStorage.getItem("loginStatus");
+    console.log("is log?", isLoggedIn);
     // if (token) {
     //   setAuthenticationToken(token);
     // }
@@ -75,9 +76,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       router.push("/welcome");
     }
     setTimeout(() => {
+      console.log("usuario logeado", isLoggedIn);
       setIsLoading(false);
     }, 3000);
-  }, [router]);
+  }, [router, isLoggedIn]);
 
   useEffect(() => {
     checkIfUserIsLoggedIn();

@@ -1,3 +1,5 @@
+export interface AdministrationContextType {}
+
 export interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;

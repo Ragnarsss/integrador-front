@@ -1,7 +1,13 @@
+"use client";
 import React from "react";
+import CreateUserForm from "./components/CreateUserForm";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <section>
+      <CreateUserForm />
+    </section>
+  );
 };
 
 export default page;

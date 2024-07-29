@@ -27,3 +27,15 @@ export const LoginSchema = z.object({
     message: "Ingresa una contraseña mas larga. Mínimo 8 caracteres",
   }),
 });
+
+export const CreateUserSchema = z.object({
+  email: z.string().email({
+    message: "Ingresa un correo válido",
+  }),
+  name: z.string().min(3, {
+    message: "Ingresa un nombre mas largo",
+  }),
+  role: z.string().min(3, {
+    message: "Ingresa un rol",
+  }),
+});
